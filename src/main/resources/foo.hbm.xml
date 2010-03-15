@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="rds.hibernate" default-access="field">
+    <class name="Foo">
+        <id name="id">
+            <generator class="increment" />
+        </id>
+        <property name="name" />
+        <map name="bars" table="fooBars">
+            <key column="fooId" />
+            <map-key-many-to-many class="Bar" column="barId" />
+            <element column="number" type="int" />
+        </map>
+    </class>
+    <class name="Bar">
+        <id name="id">
+            <generator class="increment" />
+        </id>
+        <property name="name" />
+        <set name="foos" table="fooBars" inverse="true">
+            <key column="barId" />
+            <many-to-many class="Foo" column="fooId" />
+        </set>
+    </class>
+</hibernate-mapping>
