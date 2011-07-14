@@ -6,15 +6,36 @@ import java.util.*;
 public class Elements {
     // Instead of having 14 separate variables, you can store your
     // "element effects" in a Map, using the element name as a key.
-    private static Map<String, Double> elementMap = new HashMap<String, Double>();
+    private static Map<String, Integer> elementMap = new HashMap<String, Integer>();
 
     static {
-        elementMap.put("fire", 1.0);
-        elementMap.put("water", 2.0);
-        // Put your other elements in the map here.
+        elementMap.put("fire", 10 * 2 * 2 / 32);
+        elementMap.put("ice", 10 * 2 * 3 / 32);
+        elementMap.put("water", 10 * 2 * 4 / 32);
+        elementMap.put("wind", 10 * 2 * 5 / 32);
+        elementMap.put("earth", 10 * 2 * 6 / 32);
+        elementMap.put("poison", 10 * 2 * 7 / 32);
+        elementMap.put("gravity", 10 * 2 * 8 / 32);
+        elementMap.put("shadow", 10 * 2 * 9 / 32);
+        elementMap.put("light", 10 * 2 * 10 / 32);
+        elementMap.put("elec", 10 * 2 * 11 / 32);
+        elementMap.put("holy", 10 * 2 * 12 / 32);
+        elementMap.put("anti", 10 * 2 * 13 / 32);
+        elementMap.put("void", 10 * 2 * 14 / 32);
+        elementMap.put("time", 10 * 2 * 15 / 32);
     }
 
     public static void main(String[] args) {
+        List<Integer> elementValues = getElementValues();
+        double yourHp = 1234.0;
+        System.out.println("Starting HP: " + yourHp);
+        for (Integer elementValue : elementValues) {
+            yourHp += elementValue;
+        }
+        System.out.println("Ending HP: " + yourHp);
+    }
+
+    private static List<Integer> getElementValues() {
         // Your input scanner:
         Scanner sin = new Scanner(System.in);
         // This list will keep track of all the elements entered by the user
@@ -35,19 +56,22 @@ public class Elements {
                     break;
                 }
             } else {
-                // They didn't ask to quit, so store the element they entered
-                elements.add(element.toLowerCase());
+                // They didn't ask to quit, so maybe they entered an element
+                if (elementMap.get(element) == null) {
+                    // If elementMap.get() returns null, then it's not a valid element
+                    System.out.println("Not a valid element, try again:");
+                } else {
+                    // They entered a good element, so store it
+                    elements.add(element.toLowerCase());
+                }
             }
         }
-        double yourHp = 1234.0;
-        System.out.println("Starting HP: " + yourHp);
-        // Now there are between 1 and 5 elements stored in the list
+        // Now there are between 1 and 5 elements stored in the elements list,
+        // and we just have to get their values that are stored in the map.
+        List<Integer> elementValues = new ArrayList<Integer>();
         for (String element : elements) {
-            yourHp += elementMap.get(element);
+            elementValues.add(elementMap.get(element));
         }
-        System.out.println("Ending HP: " + yourHp);
+        return elementValues;
     }
 }
-
-//example:    yourHP = yearBorn * logHPCalc; <- I want to make the element variable affect this, as this is the main calculation for statistical data.
-// Example 2: yourHP = yearBorn * logHPCalc + [selection of 1 to 5 elements here each with separate "+ elemVariable's"]
