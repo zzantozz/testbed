@@ -1,4 +1,5 @@
-hibernate-testbed.iml
-hibernate-testbed.ipr
-hibernate-testbed.iws
+*.iml
+*.ipr
+*.iws
 target
+.idea
