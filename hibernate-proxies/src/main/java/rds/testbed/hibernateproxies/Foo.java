@@ -1,7 +1,6 @@
 package rds.testbed.hibernateproxies;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,7 +33,7 @@ public class Foo {
     }
 
     public Set<Bar> getBars() {
-        throw new IllegalStateException("foo");
+        throw new IllegalStateException("I was thrown from getBars()");
     }
 
     public void setBars(Set<Bar> bars) {

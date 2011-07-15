@@ -25,6 +25,24 @@ public class Main {
                                                 .setProperty("hibernate.connection.url", "jdbc:h2:mem:foo;DB_CLOSE_DELAY=-1")
                                                 .setProperty("hibernate.hbm2ddl.auto", "create")
                                                 .buildSessionFactory();
+        Serializable savedId = saveAFoo(sessionFactory);
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        Foo loadedFoo = (Foo) session.load(Foo.class, savedId);
+        System.err.println("Is a Hibernate proxy: " + (loadedFoo instanceof HibernateProxy));
+        System.err.println("Is initialized: " + Hibernate.isInitialized(loadedFoo));
+        System.err.println("Class: " + loadedFoo.getClass());
+        System.err.print("Calling getBars: ");
+        try {
+            System.err.println(loadedFoo.getBars());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.err.println("Is initialized: " + Hibernate.isInitialized(loadedFoo));
+        tx.commit();
+    }
+
+    private static Serializable saveAFoo(SessionFactory sessionFactory) {
         Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         Foo foo = new Foo("bob");
@@ -36,15 +54,6 @@ public class Main {
         Serializable bobId = session.save(foo);
         tx.commit();
         session.close();
-
-        session = sessionFactory.openSession();
-        tx = session.beginTransaction();
-        Foo loadedFoo = (Foo) session.load(Foo.class, bobId);
-        System.err.println("Is a Hibernate proxy: " + (loadedFoo instanceof HibernateProxy));
-        System.err.println("Is initialized: " + Hibernate.isInitialized(loadedFoo));
-        System.err.println("Class: " + loadedFoo.getClass());
-        System.err.print("Calling getBars: ");
-        System.err.println(foo.getBars());
-        tx.commit();
+        return bobId;
     }
 }
