@@ -1,4 +1,4 @@
-package com.foo;
+package rds.testbed;
 
 // Import our collections (Maps and Lists)
 import java.util.*;

@@ -1,4 +1,4 @@
-package com.foo;
+package rds.testbed;
 
 import com.sun.grizzly.http.SelectorThread;
 import com.sun.jersey.api.client.Client;

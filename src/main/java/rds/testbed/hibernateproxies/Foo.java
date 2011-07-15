@@ -1,14 +1,8 @@
-package rds.hibernate;
-
-import org.hibernate.annotations.*;
-import org.hibernate.annotations.MapKey;
-import org.hibernate.annotations.CascadeType;
+package rds.testbed.hibernateproxies;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -24,7 +18,7 @@ public class Foo {
     private int id;
     @Basic
     private String name;
-    @OneToMany(targetEntity = Bar.class, mappedBy = "foo", orphanRemoval = true)
+    @OneToMany(mappedBy = "foo", orphanRemoval = true)
     @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.DELETE})
     private Set<Bar> bars = new HashSet<Bar>();
 

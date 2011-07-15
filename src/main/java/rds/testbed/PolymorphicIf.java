@@ -1,4 +1,4 @@
-package com.foo;
+package rds.testbed;
 
 import java.util.Arrays;
 import java.util.List;

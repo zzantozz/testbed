@@ -1,4 +1,4 @@
-package com.foo;
+package rds.testbed;
 
 /**
  * Created by IntelliJ IDEA.
