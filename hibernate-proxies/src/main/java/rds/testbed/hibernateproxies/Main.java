@@ -25,18 +25,21 @@ public class Main {
                                                 .setProperty("hibernate.connection.url", "jdbc:h2:mem:foo;DB_CLOSE_DELAY=-1")
                                                 .setProperty("hibernate.hbm2ddl.auto", "create")
                                                 .buildSessionFactory();
+        System.out.println("First, save a Foo");
         Serializable savedId = saveAFoo(sessionFactory);
         Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
+        System.out.println("Load the Foo in a new session to avoid the first level cache");
         Foo loadedFoo = (Foo) session.load(Foo.class, savedId);
-        System.err.println("Is a Hibernate proxy: " + (loadedFoo instanceof HibernateProxy));
-        System.err.println("Is initialized: " + Hibernate.isInitialized(loadedFoo));
-        System.err.println("Class: " + loadedFoo.getClass());
-        System.err.print("Calling getBars: ");
+        System.out.println("About the loaded Foo--");
+        System.out.println("Is a Hibernate proxy: " + (loadedFoo instanceof HibernateProxy));
+        System.out.println("Is initialized: " + Hibernate.isInitialized(loadedFoo));
+        System.out.println("Class: " + loadedFoo.getClass());
+        System.out.print("Calling getBars: ");
         try {
-            System.err.println(loadedFoo.getBars());
+            System.out.println(loadedFoo.getBars());
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
         System.err.println("Is initialized: " + Hibernate.isInitialized(loadedFoo));
         tx.commit();
@@ -54,6 +57,7 @@ public class Main {
         Serializable bobId = session.save(foo);
         tx.commit();
         session.close();
+        System.out.println("Foo saved and committed: " + foo);
         return bobId;
     }
 }
