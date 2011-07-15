@@ -17,8 +17,8 @@ public class Bar {
     private int id;
     @Basic
     private String name;
-    @ManyToMany(mappedBy = "bars")
-    private Set<Foo> foos = new HashSet<Foo>();
+    @ManyToOne
+    private Foo foo;
 
     Bar() {
     }
@@ -31,9 +31,12 @@ public class Bar {
         return name;
     }
 
-    public Set<Foo> getFoos() {
-//        return foos;
-        return new HashSet<Foo>();
+    public Foo getFoo() {
+        return foo;
+    }
+
+    public void setFoo(Foo foo) {
+        this.foo = foo;
     }
 
     public String toString() {

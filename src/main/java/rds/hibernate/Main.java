@@ -7,6 +7,8 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.classic.Session;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,26 +22,22 @@ public class Main {
 //        SessionFactory sessionFactory = xmlSessionFactory();
         Session session = sessionFactory.getCurrentSession();
         Transaction tx = session.beginTransaction();
-        Foo bob = new Foo("bob");
-        Bar fred = new Bar("fred");
-        Serializable bobId = session.save(bob);
-        session.save(fred);
-        bob.getBars().put(fred, 5);
-        fred.getFoos().add(bob);
+        Foo foo = new Foo("bob");
+        Bar one = new Bar("one");
+        one.setFoo(foo);
+        Bar two = new Bar("two");
+        two.setFoo(foo);
+        foo.setBars(new HashSet<Bar>(Arrays.asList(one, two)));
+        Serializable bobId = session.save(foo);
         tx.commit();
 
         session = sessionFactory.getCurrentSession();
         tx = session.beginTransaction();
-        session.evict(bob);
-        session.evict(fred);
+        session.evict(foo);
         Foo loadedBob = (Foo) session.load(Foo.class, bobId);
-        System.out.println("Bob's name:  " + loadedBob.getName());
-        System.out.println("Bob's map:   " + loadedBob.getBars());
-        if (!loadedBob.getBars().isEmpty()) {
-            Bar loadedFred = loadedBob.getBars().entrySet().iterator().next().getKey();
-            System.out.println("Fred's name: " + loadedFred.getName());
-            System.out.println("Fred's foos: " + loadedFred.getFoos());
-        }
+        System.out.println("Bob's class: " + loadedBob.getClass());
+        System.out.println("Bob's bars: " + foo.getBars());
+        System.out.println("Bob:  " + loadedBob);
         tx.commit();
     }
 

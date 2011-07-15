@@ -7,7 +7,9 @@ import org.hibernate.annotations.CascadeType;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by IntelliJ IDEA.
@@ -22,9 +24,9 @@ public class Foo {
     private int id;
     @Basic
     private String name;
-    @MapKeyManyToMany(targetEntity = Bar.class)
-    @CollectionOfElements(targetElement = Integer.class)
-    private Map<Bar, Integer> bars = new HashMap<Bar, Integer>();
+    @OneToMany(targetEntity = Bar.class, mappedBy = "foo", orphanRemoval = true)
+    @org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.DELETE})
+    private Set<Bar> bars = new HashSet<Bar>();
 
     Foo() {
     }
@@ -34,14 +36,22 @@ public class Foo {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
-    public Map<Bar, Integer> getBars() {
-        return bars;
+    public Set<Bar> getBars() {
+        throw new IllegalStateException("foo");
     }
 
+    public void setBars(Set<Bar> bars) {
+        this.bars = bars;
+    }
+
+    @Override
     public String toString() {
-        return name;
+        return "Foo{" +
+                       "name='" + name + '\'' +
+                       ", bars=" + bars +
+                       '}';
     }
 }
