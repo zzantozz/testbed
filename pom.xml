@@ -9,7 +9,7 @@
     <modules>
         <module>hibernate-proxies</module>
         <module>multiple-artifacts</module>
-        <module>basic-webapp</module>
+        <module>basic-jersey</module>
     </modules>
     <repositories>
         <repository>
