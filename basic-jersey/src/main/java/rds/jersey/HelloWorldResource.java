@@ -1,4 +1,4 @@
-package com.e.api;
+package rds.jersey;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;

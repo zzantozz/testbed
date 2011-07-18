@@ -11,9 +11,11 @@ import java.util.regex.Pattern;
  */
 public class Regex {
     public static void main(String[] args) {
-        String[] strings = "foo@bar.com".split("@|\\.");
-        for (String string : strings) {
-            System.out.println(string);
-        }
+        Pattern pattern = Pattern.compile("^(?=.{8,})(?=.*\\d{2,}).*$");
+        System.out.println(pattern.matcher("a2cd1fgh").matches());
+//        String[] strings = "foo@bar.com".split("@|\\.");
+//        for (String string : strings) {
+//            System.out.println(string);
+//        }
     }
 }
