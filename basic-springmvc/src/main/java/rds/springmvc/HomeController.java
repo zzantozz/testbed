@@ -37,7 +37,7 @@ public class HomeController {
 
         User user = this.userService.retrieveUser((long) 1);
 
-        logger.info("Tried to retrieve User with ID 1: " + user.getSurname());
+        logger.info("Tried to retrieve User with ID 1: " + user);
 
         return "home";
     }
