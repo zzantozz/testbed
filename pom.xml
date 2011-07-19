@@ -12,6 +12,7 @@
         <module>basic-jersey</module>
         <module>basic-springmvc</module>
         <module>hibernate-eager-fetching</module>
+        <module>hibernate-create-drop</module>
     </modules>
     <repositories>
         <repository>
