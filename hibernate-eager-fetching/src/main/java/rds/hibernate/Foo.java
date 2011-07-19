@@ -19,7 +19,6 @@ public class Foo {
     @GeneratedValue
     private int id;
     @OneToMany(mappedBy = "foo", fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SELECT)
     private List<Bar> bars = new ArrayList<Bar>();
 
     public List<Bar> getBars() {
