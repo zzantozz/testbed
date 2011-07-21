@@ -1,0 +1,32 @@
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="rds.hibernate" default-access="field">
+    <class name="Book">
+        <id name="id">
+            <generator class="increment"/>
+        </id>
+        <property name="name" column="BOOK_NAME"/>
+        <many-to-one name="publisher" class="Publisher" column="PUBLISHER_ID" lazy="false" cascade="save-update"/>
+        <many-to-one name="author" class="Author" column="AUTHOR_ID" lazy="false" cascade="save-update"/>
+    </class>
+    <class name="Author">
+        <id name="id">
+            <generator class="increment"/>
+        </id>
+        <set name="books" inverse="true" table="BOOK" lazy="false" order-by="BOOK_NAME asc" cascade="delete-orphan">
+            <key column="AUTHOR_ID"/>
+            <one-to-many class="Book"/>
+        </set>
+    </class>
+    <class name="Publisher">
+        <id name="id">
+            <generator class="increment"/>
+        </id>
+        <set name="books" inverse="true" table="BOOK" lazy="false" order-by="BOOK_NAME asc" cascade="delete-orphan">
+            <key column="PUBLISHER_ID"/>
+            <one-to-many class="Book"/>
+        </set>
+    </class>
+</hibernate-mapping>

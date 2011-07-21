@@ -11,6 +11,7 @@
         <module>multiple-artifacts</module>
         <module>basic-jersey</module>
         <module>basic-springmvc</module>
+        <module>hibernate-stalestateexception</module>
     </modules>
     <repositories>
         <repository>
