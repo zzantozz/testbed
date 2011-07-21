@@ -38,6 +38,7 @@ public class Main {
         session = sessionFactory.openSession();
         List list = session.createCriteria(Foo.class).list();
         System.out.println(list);
+        System.out.println("We got two copies of the one Foo that was created because of the eager fetching.");
         session.close();
     }
 }
