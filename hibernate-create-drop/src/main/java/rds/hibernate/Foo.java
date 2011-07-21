@@ -15,7 +15,7 @@ public class Foo {
     @Id
     @GeneratedValue
     private int id;
-    @OneToMany(mappedBy = "foo", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "foo")
     private List<Bar> bars = new ArrayList<Bar>();
 
     public List<Bar> getBars() {
