@@ -1,10 +1,6 @@
 package rds.testbed;
 
-import sun.plugin2.message.SetChildWindowHandleMessage;
-
-import java.util.HashSet;
 import java.util.Properties;
-import java.util.Set;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,11 +16,5 @@ public class SetSystemPropertiesFromPropertiesFile {
             String value = p.getProperty(name);
             System.setProperty(name, value);
         }
-
-    Set s = new HashSet();
-    Set<Object> so = new HashSet<Object>();
-    s = so;
-    so = s;
-        so.add("foo");
     }
 }
