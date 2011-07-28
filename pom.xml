@@ -15,6 +15,7 @@
         <module>hibernate-eager-fetching</module>
         <module>hibernate-create-drop</module>
         <module>miscellaneous</module>
+        <module>asm-playground</module>
     </modules>
     <repositories>
         <repository>
