@@ -16,6 +16,7 @@
         <module>hibernate-create-drop</module>
         <module>miscellaneous</module>
         <module>asm-playground</module>
+        <module>jersey-with-streaming-xml-response</module>
     </modules>
     <repositories>
         <repository>
