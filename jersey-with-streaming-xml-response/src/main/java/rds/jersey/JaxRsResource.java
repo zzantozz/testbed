@@ -95,10 +95,6 @@ public class JaxRsResource {
         System.out.println("Grizzly started");
         System.out.println("Starting a thread to request the streamed XML");
         executorService.submit(new HttpRequester(baseUri + "streaming"));
-        System.out.println("Enter to exit at any time, or we'll exit when the client is done...");
-        System.in.read();
-        threadSelector.stopEndpoint();
-        System.exit(0);
     }
 }
 

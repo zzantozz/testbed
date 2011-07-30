@@ -18,7 +18,7 @@ public class Foo {
     @Id
     @GeneratedValue
     private int id;
-    @OneToMany(mappedBy = "foo", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "foo", fetch = FetchType.EAGER) // Remove this eager fetch to avoid duplicate Foos
     private List<Bar> bars = new ArrayList<Bar>();
 
     public List<Bar> getBars() {

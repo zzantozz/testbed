@@ -18,6 +18,17 @@
         <module>asm-playground</module>
         <module>jersey-with-streaming-xml-response</module>
     </modules>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <repositories>
         <repository>
             <id>maven2-repository.java.net</id>
