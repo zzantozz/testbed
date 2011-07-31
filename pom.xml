@@ -17,6 +17,7 @@
         <module>miscellaneous</module>
         <module>hibernate-tree-nodes</module>
         <module>asm-playground</module>
+        <module>log4j-reconfigure-on-the-fly</module>
         <module>jersey-with-streaming-xml-response</module>
     </modules>
     <build>
