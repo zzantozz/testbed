@@ -8,12 +8,11 @@ package rds.asm;
  */
 public class TestPojo {
     private int x;
-    private int y;
+    private final int y;
 
-    public TestPojo(int x, int y) {
-        System.out.println("Instantiating");
+    public TestPojo(int x) {
         this.x = x;
-        this.y = y;
+        this.y = 1;
     }
 
     public int getX() {
@@ -21,15 +20,8 @@ public class TestPojo {
     }
 
     public void setX(int x) {
+        System.out.println("Setting x");
         this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 
     @Override

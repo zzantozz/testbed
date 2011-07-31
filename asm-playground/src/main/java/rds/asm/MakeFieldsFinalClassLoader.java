@@ -13,8 +13,8 @@ import java.io.PrintWriter;
  * Date: 7/27/11
  * Time: 4:36 PM
  */
-public class MakeItImmutableClassLoader extends ClassLoader {
-    public MakeItImmutableClassLoader(ClassLoader parent) {
+public class MakeFieldsFinalClassLoader extends ClassLoader {
+    public MakeFieldsFinalClassLoader(ClassLoader parent) {
         super(parent);
     }
 
@@ -23,14 +23,13 @@ public class MakeItImmutableClassLoader extends ClassLoader {
         try {
             ClassWriter writer = new ClassWriter(0);
             TraceClassVisitor tracer = new TraceClassVisitor(writer, new PrintWriter(System.out));
-            MakeItImmutableClassAdapter immuter = new MakeItImmutableClassAdapter(tracer);
+            MakeFieldsFinalClassAdapter makeFieldsFinalClassAdapter = new MakeFieldsFinalClassAdapter(tracer);
             ClassReader reader = new ClassReader(name);
-            reader.accept(immuter, 0);
+            reader.accept(makeFieldsFinalClassAdapter, 0);
             byte[] bytes = writer.toByteArray();
             return defineClass(name, bytes, 0, bytes.length);
         } catch (IOException e) {
-            // TODO: Write me!
-            throw new UnsupportedOperationException("Unwritten catch block");
+            throw new ClassNotFoundException("Unable to read class", e);
         }
     }
 }
