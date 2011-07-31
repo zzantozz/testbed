@@ -15,6 +15,7 @@
         <module>hibernate-eager-fetching</module>
         <module>hibernate-create-drop</module>
         <module>miscellaneous</module>
+        <module>hibernate-tree-nodes</module>
         <module>asm-playground</module>
         <module>jersey-with-streaming-xml-response</module>
     </modules>
