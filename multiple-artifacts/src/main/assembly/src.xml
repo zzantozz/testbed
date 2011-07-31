@@ -1,6 +1,0 @@
-<assembly>
-    <id>deploy-multiple</id>
-    <formats>
-        <format>dir</format>
-    </formats>
-</assembly>
