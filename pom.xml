@@ -19,6 +19,7 @@
         <module>asm-playground</module>
         <module>log4j-reconfigure-on-the-fly</module>
         <module>jersey-with-streaming-xml-response</module>
+        <module>clojure-playground</module>
         <module>scala-playground</module>
         <module>scalatest</module>
     </modules>
