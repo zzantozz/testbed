@@ -21,8 +21,8 @@ public class AddSetYMethodVisitor extends MethodAdapter {
         wrappedVisitor.visitFieldInsn(opcode, owner, name, desc);
         if (opcode == Opcodes.PUTFIELD
                     && owner.equals(Type.getInternalName(TestPojo.class))
-                && name.equals("x")
-                && desc.equals(Type.getDescriptor(Integer.TYPE))) {
+                    && name.equals("x")
+                    && desc.equals(Type.getDescriptor(Integer.TYPE))) {
             Label label = new Label();
             wrappedVisitor.visitLabel(label);
             wrappedVisitor.visitLineNumber(24, label);
@@ -32,12 +32,11 @@ public class AddSetYMethodVisitor extends MethodAdapter {
             wrappedVisitor.visitFieldInsn(Opcodes.PUTFIELD, owner, "y", Type.getDescriptor(Integer.TYPE));
         }
     }
-/* bytecode to assign 10 to y in setX()
-   L2
-    LINENUMBER 24 L2
-    ALOAD 0
-    BIPUSH 10
-    PUTFIELD rds/asm/TestPojo.y : I
-*/
-
+    /* bytecode to assign 10 to y in setX()
+       L2
+        LINENUMBER 24 L2
+        ALOAD 0
+        BIPUSH 10
+        PUTFIELD rds/asm/TestPojo.y : I
+    */
 }
