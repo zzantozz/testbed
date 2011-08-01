@@ -22,6 +22,7 @@
         <module>clojure-playground</module>
         <module>scala-playground</module>
         <module>scalatest</module>
+        <module>basic-spring-jms</module>
     </modules>
     <build>
         <plugins>
