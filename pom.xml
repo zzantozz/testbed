@@ -23,6 +23,7 @@
         <module>scala-playground</module>
         <module>scalatest</module>
         <module>basic-spring-jms</module>
+        <module>hibernate-multi-many-to-ones</module>
     </modules>
     <build>
         <plugins>
