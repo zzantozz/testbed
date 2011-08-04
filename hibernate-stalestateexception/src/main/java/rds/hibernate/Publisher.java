@@ -1,7 +1,5 @@
 package rds.hibernate;
 
-import com.sun.xml.internal.fastinfoset.util.CharArrayArray;
-
 import java.util.HashSet;
 import java.util.Set;
 
