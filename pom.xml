@@ -26,7 +26,7 @@
         <module>hibernate-multi-many-to-ones</module>
     </modules>
     <scm>
-        <developerConnection>scm:git|ssh://git@github.com:zzantozz/testbed.git</developerConnection>
+        <developerConnection>scm:git|ssh://git@github.com/zzantozz/testbed.git</developerConnection>
     </scm>
     <build>
         <plugins>
