@@ -26,6 +26,7 @@
         <module>hibernate-multi-many-to-ones</module>
         <module>serviceloader-example</module>
         <module>hibernate-unidirectional-one-to-many-with-join-column</module>
+        <module>hibernate-any</module>
     </modules>
     <scm>
         <developerConnection>scm:git|ssh://git@github.com/zzantozz/testbed.git</developerConnection>
