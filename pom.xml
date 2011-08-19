@@ -27,6 +27,7 @@
         <module>serviceloader-example</module>
         <module>hibernate-unidirectional-one-to-many-with-join-column</module>
         <module>hibernate-any</module>
+        <module>spring-aspectj-build-time-weaving</module>
     </modules>
     <scm>
         <developerConnection>scm:git|ssh://git@github.com/zzantozz/testbed.git</developerConnection>
