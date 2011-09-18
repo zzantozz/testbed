@@ -28,6 +28,7 @@
         <module>hibernate-any</module>
         <module>spring-aspectj-build-time-weaving</module>
         <module>hibernate-with-xml-mappings</module>
+        <module>spring-aspectj-load-time-weaving-in-jetty</module>
     </modules>
     <scm>
         <developerConnection>scm:git|ssh://git@github.com/zzantozz/testbed.git</developerConnection>
