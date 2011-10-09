@@ -1,6 +1,5 @@
 package rds.hibernate;
 
-import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
@@ -18,6 +17,9 @@ public class Main {
     public static void main(String[] args) {
         SessionFactory sessionFactory = new Configuration()
                       .addAnnotatedClass(Node.class)
+                      .addAnnotatedClass(Task.class)
+                      .addAnnotatedClass(TaskStatus.class)
+                      .addAnnotatedClass(LanguageType.class)
                       .setProperty("hibernate.connection.url", "jdbc:h2:mem:foo;DB_CLOSE_DELAY=-1")
                       .setProperty("hibernate.hbm2ddl.auto", "create")
                       .buildSessionFactory();
@@ -39,6 +41,15 @@ public class Main {
         System.out.println("Before saving:");
         print(a, 1);
         Serializable rootNodeId = session.save(a);
+
+        Task t = new Task();
+        TaskStatus status = new TaskStatus();
+        LanguageType l = new LanguageType();
+        status.languageType = l;
+        t.status = status;
+        Serializable taskid = session.save(t);
+        session.save(status);
+        session.save(l);
         transaction.commit();
         session.close();
 
@@ -46,6 +57,8 @@ public class Main {
         Node root = (Node) session.load(Node.class, rootNodeId);
         System.out.println("Freshly loaded:");
         print(root, 1);
+        Object load = session.load(Task.class, taskid);
+        System.out.println(load);
         session.close();
     }
 

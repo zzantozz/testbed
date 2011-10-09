@@ -9,6 +9,9 @@
         </layout>
     </appender>
 
+    <logger name="org.hibernate">
+        <level value="trace"/>
+    </logger>
     <root>
         <priority value="info"/>
         <appender-ref ref="console"/>

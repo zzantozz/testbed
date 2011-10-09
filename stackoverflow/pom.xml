@@ -11,6 +11,7 @@
     <artifactId>stackoverflow</artifactId>
     <packaging>pom</packaging>
     <modules>
+        <module>6781080-hibernate-tree-nodes</module>
         <module>7692855-springmvc-controller-autowiring</module>
     </modules>
 </project>
