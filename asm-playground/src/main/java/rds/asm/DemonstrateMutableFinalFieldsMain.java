@@ -12,10 +12,10 @@ import java.lang.reflect.Modifier;
  * Date: 7/27/11
  * Time: 4:35 PM
  */
-public class MakingFieldsFinalMain {
+public class DemonstrateMutableFinalFieldsMain {
     public static void main(String[] args) throws Exception {
         MakeFieldsFinalClassLoader classLoader =
-                new MakeFieldsFinalClassLoader(MakingFieldsFinalMain.class.getClassLoader());
+                new MakeFieldsFinalClassLoader(DemonstrateMutableFinalFieldsMain.class.getClassLoader());
         Class<?> clazz = classLoader.findClass("rds.asm.TestPojo");
         Constructor<?> constructor = clazz.getConstructor(Integer.TYPE);
         Object o = constructor.newInstance(5);

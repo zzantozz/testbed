@@ -1,11 +1,6 @@
 package rds.asm;
 
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.util.TraceClassVisitor;
-
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -21,12 +16,7 @@ public class MakeFieldsFinalClassLoader extends ClassLoader {
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
         try {
-            ClassWriter writer = new ClassWriter(0);
-            TraceClassVisitor tracer = new TraceClassVisitor(writer, new PrintWriter(System.out));
-            MakeFieldsFinalClassAdapter makeFieldsFinalClassAdapter = new MakeFieldsFinalClassAdapter(tracer);
-            ClassReader reader = new ClassReader(name);
-            reader.accept(makeFieldsFinalClassAdapter, 0);
-            byte[] bytes = writer.toByteArray();
+            byte[] bytes = new MakeFieldsFinalBytecodeManipulator().getModifiedByteCode(name);
             return defineClass(name, bytes, 0, bytes.length);
         } catch (IOException e) {
             throw new ClassNotFoundException("Unable to read class", e);
