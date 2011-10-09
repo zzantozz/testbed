@@ -23,14 +23,8 @@ public class HibernateUserDao implements UserDao {
     }
 
     @Override
-    public User findById(Long id) {
-        Query query = this.sessionFactory.getCurrentSession().createQuery("from User user where user.id=?");
-        return (User) query.setLong(0, id).uniqueResult();
-    }
-
-    @Override
-    public User persistOrMerge(User user) {
-        return (User) this.sessionFactory.getCurrentSession().merge(user);
+    public void makePersistent(User user) {
+        this.sessionFactory.getCurrentSession().save(user);
     }
 
     @Override

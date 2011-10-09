@@ -23,14 +23,8 @@ public class DefaultUserService implements UserService {
 
     @Override
     @Transactional
-    public User createUser(User user) {
-        return userDao.persistOrMerge(user);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public User retrieveUser(Long id) {
-        return userDao.findById(id);
+    public void createUser(User user) {
+        userDao.makePersistent(user);
     }
 
     @Override

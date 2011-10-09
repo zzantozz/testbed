@@ -2,10 +2,10 @@
 
 <form action="" method="POST">
     <p>Add a user</p>
-    <p>Name: <input type="text" name="surname"></p>
+    <p>Name: <input type="text" name="name"></p>
     <p><input type="submit" value="Add"></p>
 </form>
 
 <c:forEach var="user" items="${users}">
-    <c:out value="${user}"/>
+    <c:out value="${user}"/><br/>
 </c:forEach>

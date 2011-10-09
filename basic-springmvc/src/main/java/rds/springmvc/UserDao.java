@@ -9,7 +9,6 @@ import java.util.List;
  * Time: 1:56 AM
  */
 public interface UserDao {
-    User findById(Long id);
-    User persistOrMerge(User user);
+    void makePersistent(User user);
     List<User> findAll();
 }

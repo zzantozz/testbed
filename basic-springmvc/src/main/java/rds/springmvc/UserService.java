@@ -1,7 +1,5 @@
 package rds.springmvc;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 /**
@@ -11,7 +9,6 @@ import java.util.List;
  * Time: 1:57 AM
  */
 public interface UserService {
-    User createUser(User user);
-    User retrieveUser(Long id);
+    void createUser(User user);
     List<User> getAll();
 }

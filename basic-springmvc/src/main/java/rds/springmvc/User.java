@@ -15,19 +15,27 @@ import javax.persistence.Id;
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String surname;
+    private String name;
 
     protected User() {}
 
-    public User(String surname) {
-        this.surname = surname;
+    public User(String name) {
+        this.name = name;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getName() {
+        return name;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

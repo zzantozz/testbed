@@ -29,14 +29,15 @@ public class MyController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String users(@ModelAttribute ArrayList<User> users) {
+    public String users(@ModelAttribute("users") ArrayList<User> users) {
         log.info("Showing users");
         users.addAll(this.userService.getAll());
+        log.debug("Got " + users.size() + " users to show");
         return "users";
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public String createUser(User user, @ModelAttribute ArrayList<User> users) {
+    public String createUser(User user, @ModelAttribute("users") ArrayList<User> users) {
         log.info("Creating user");
         userService.createUser(user);
         users.addAll(this.userService.getAll());
