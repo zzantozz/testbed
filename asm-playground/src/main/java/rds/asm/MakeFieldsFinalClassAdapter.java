@@ -24,6 +24,10 @@ public class MakeFieldsFinalClassAdapter extends ClassAdapter {
     @Override
     public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
         MethodVisitor methodVisitor = wrappedVisitor.visitMethod(access, name, desc, signature, exceptions);
-        return new AddSetYMethodVisitor(methodVisitor);
+        if (name.equals("setX")) {
+            return new AddSetYMethodVisitor(methodVisitor);
+        } else {
+            return methodVisitor;
+        }
     }
 }

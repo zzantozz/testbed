@@ -4,6 +4,7 @@ import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 
 /**
  * Created by IntelliJ IDEA.
@@ -22,6 +23,8 @@ public class MakingFieldsFinalMain {
         System.out.println("Object's class: " + o.getClass());
         System.out.println("Object's class equal to rds.asm.TestPojo.class? " +
                                    rds.asm.TestPojo.class.equals(o.getClass()));
+        System.out.println("Is field x final? " + Modifier.isFinal(o.getClass().getDeclaredField("x").getModifiers()));
+        System.out.println("Is field y final? " + Modifier.isFinal(o.getClass().getDeclaredField("y").getModifiers()));
         BeanInfo beanInfo = Introspector.getBeanInfo(o.getClass());
         for (PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
             if (propertyDescriptor.getName().equals("x")) {

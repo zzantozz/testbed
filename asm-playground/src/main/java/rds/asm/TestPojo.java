@@ -20,7 +20,6 @@ public class TestPojo {
     }
 
     public void setX(int x) {
-        System.out.println("Setting x");
         this.x = x;
     }
 
