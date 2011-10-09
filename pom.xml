@@ -52,4 +52,13 @@
             <layout>default</layout>
         </repository>
     </repositories>
+    <dependencies>
+        <dependency>
+            <!-- This is only here because IntelliJ is all-or-nothing when it comes to the aspectj compiler. Either you're compiling with javac or with ajc.
+                Therefore if you're in a module that doesn't have aspectjrt on the classpath, you'll get a compiler error. -->
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.6.11</version>
+        </dependency>
+    </dependencies>
 </project>
