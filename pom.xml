@@ -29,6 +29,7 @@
         <module>hibernate-with-xml-mappings</module>
         <module>spring-aspectj-load-time-weaving-in-jetty</module>
         <module>stackoverflow</module>
+        <module>gmaven-to-build-classpath-file</module>
     </modules>
     <scm>
         <developerConnection>scm:git|ssh://git@github.com/zzantozz/testbed.git</developerConnection>
