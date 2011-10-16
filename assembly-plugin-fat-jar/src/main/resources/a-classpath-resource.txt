@@ -1,0 +1,1 @@
+This text is inside a text file on the classpath. You'll see it printed to stdout if you package this project and run the jar.
