@@ -20,6 +20,7 @@
         <module>clojure-playground</module>
         <module>scala-playground</module>
         <module>scalatest</module>
+        <module>basic-aspectj</module>
         <module>basic-spring-jms</module>
         <module>hibernate-multi-many-to-ones</module>
         <module>serviceloader-example</module>
@@ -31,6 +32,9 @@
         <module>stackoverflow</module>
         <module>assembly-plugin-fat-jar</module>
     </modules>
+    <properties>
+        <mainClass>If you see this, then you're trying to run "mvn exec:java" without overriding this "mainClass" POM property or otherwise providing a main class to the exec plugin.</mainClass>
+    </properties>
     <scm>
         <developerConnection>scm:git|ssh://git@github.com/zzantozz/testbed.git</developerConnection>
     </scm>
@@ -42,6 +46,19 @@
                     <source>1.6</source>
                     <target>1.6</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <id>default-cli</id>
+                        <configuration>
+                            <mainClass>${mainClass}</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
