@@ -13,5 +13,6 @@
     <modules>
         <module>6781080-hibernate-tree-nodes</module>
         <module>7692855-springmvc-controller-autowiring</module>
+        <module>7755255-gmaven-to-build-xml-from-classpath</module>
     </modules>
 </project>
