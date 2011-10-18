@@ -1,8 +1,6 @@
 package com.whiteboard.wb;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -10,7 +8,7 @@ import javax.persistence.MappedSuperclass;
  * Date: 10/18/11
  * Time: 11:06 AM
  */
-@MappedSuperclass
+@Entity
 public abstract class Base {
     @Id
     @GeneratedValue

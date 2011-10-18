@@ -1,7 +1,6 @@
 package com.whiteboard.wb;
 
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,7 +16,6 @@ public class DataGenerator {
     @PersistenceContext
     EntityManager em;
 
-    @Transactional
     public void generateTestData(){
         Container c = new Container();
         c.addChildA(new ChildTypeA());

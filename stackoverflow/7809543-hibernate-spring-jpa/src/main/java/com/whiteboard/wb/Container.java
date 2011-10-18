@@ -18,9 +18,13 @@ class Container {
     private long id;
 
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "containerChildA") // If you remove these @JoinTables, it tries
+                                         // to use the same join table for both A and
+                                         // B and fails dramatically
     Set<ChildTypeA> childrenA = new HashSet<ChildTypeA>();
 
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "containerChildB")
     Set<ChildTypeB> childrenB = new HashSet<ChildTypeB>();
 
     public void addChildA(ChildTypeA child){
