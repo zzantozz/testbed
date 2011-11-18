@@ -28,6 +28,7 @@
         <module>hibernate-any</module>
         <module>spring-aspectj-build-time-weaving</module>
         <module>hibernate-with-xml-mappings</module>
+        <module>groovy-cross-compiled-with-java-with-stubs</module>
     </modules>
     <scm>
         <developerConnection>scm:git|ssh://git@github.com/zzantozz/testbed.git</developerConnection>
