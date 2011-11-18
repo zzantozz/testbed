@@ -2,15 +2,12 @@ package rds.groovy;
 
 class Foo {
     def go() {
-        new Bar().go()
+        return new Bar().go()
     }
 }
 
 class Baz {
-    def go() {
-        println 'hi there'
+    String go() {
+        return 'hi there'
     }
 }
-
-def x = new groovyStuff()
-println x

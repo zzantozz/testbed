@@ -4,10 +4,10 @@ package rds.groovy;
  * Created by IntelliJ IDEA.
  * User: ryan
  * Date: 11/17/11
- * Time: 8:14 PM
+ * Time: 11:29 PM
  */
-public class Bar {
+public class JavaFooCaller {
     public String go() {
-        return new Baz().go();
+        return new GroovyFooCaller().go();
     }
 }
