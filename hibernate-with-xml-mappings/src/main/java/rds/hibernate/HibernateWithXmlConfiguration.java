@@ -18,6 +18,10 @@ public class HibernateWithXmlConfiguration {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 
         Foo bob = new Foo("bob");
+        Bar bar1 = new Bar("first");
+        Bar bar2 = new Bar("second");
+        bob.getBars().add(bar2);
+        bob.getBars().add(bar1);
         System.out.println("Saving a new Foo: " + bob);
 
         Session session = sessionFactory.openSession();

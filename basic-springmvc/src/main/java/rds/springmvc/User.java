@@ -1,6 +1,8 @@
 package rds.springmvc;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -11,15 +13,29 @@ import javax.persistence.Id;
  */
 @Entity
 public class User {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String surname;
+    private String name;
 
-    public User(String surname) {
-        this.surname = surname;
+    protected User() {}
+
+    public User(String name) {
+        this.name = name;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

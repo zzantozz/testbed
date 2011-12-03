@@ -44,11 +44,6 @@
             <artifactId>spring-aspects</artifactId>
             <version>3.0.5.RELEASE</version>
         </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjrt</artifactId>
-            <version>1.6.10</version>
-        </dependency>
         <!-- Following dependencies are required because of spring-aspects -->
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>

@@ -6,7 +6,7 @@
         <artifactId>testbed</artifactId>
         <version>1.1-SNAPSHOT</version>
     </parent>
-    <artifactId>jersey-with-streaming-jaxb-response</artifactId>
+    <artifactId>jersey-with-streaming-xml-response</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.sun.jersey</groupId>

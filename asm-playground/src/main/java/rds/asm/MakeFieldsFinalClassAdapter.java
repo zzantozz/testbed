@@ -10,10 +10,25 @@ import org.objectweb.asm.*;
  */
 public class MakeFieldsFinalClassAdapter extends ClassAdapter {
     private ClassVisitor wrappedVisitor;
+    private String newClassName;
 
     public MakeFieldsFinalClassAdapter(ClassVisitor wrappedVisitor) {
+        this(wrappedVisitor, null);
+    }
+
+    public MakeFieldsFinalClassAdapter(ClassVisitor wrappedVisitor, String newClassName) {
         super(wrappedVisitor);
         this.wrappedVisitor = wrappedVisitor;
+        this.newClassName = newClassName;
+    }
+
+    @Override
+    public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
+        if (newClassName == null) {
+            wrappedVisitor.visit(version, access, name, signature, superName, interfaces);
+        } else {
+            wrappedVisitor.visit(version, access, newClassName, signature, superName, interfaces);
+        }
     }
 
     @Override
@@ -24,6 +39,10 @@ public class MakeFieldsFinalClassAdapter extends ClassAdapter {
     @Override
     public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
         MethodVisitor methodVisitor = wrappedVisitor.visitMethod(access, name, desc, signature, exceptions);
-        return new AddSetYMethodVisitor(methodVisitor);
+        if (name.equals("setX")) {
+            return new AddSetYMethodVisitor(methodVisitor);
+        } else {
+            return methodVisitor;
+        }
     }
 }

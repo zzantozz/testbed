@@ -1,5 +1,8 @@
 package rds.hibernate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * User: ryan
@@ -9,6 +12,7 @@ package rds.hibernate;
 public class Foo {
     private int id;
     private String name;
+    private List<Bar> bars = new ArrayList<Bar>();
 
     protected Foo() {}
 
@@ -16,10 +20,15 @@ public class Foo {
         this.name = name;
     }
 
+    public List<Bar> getBars() {
+        return bars;
+    }
+
     @Override
     public String toString() {
         return "Foo{" +
                 "name='" + name + '\'' +
+                ", bars=" + bars +
                 '}';
     }
 }

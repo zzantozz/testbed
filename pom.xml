@@ -14,13 +14,13 @@
         <module>hibernate-eager-fetching</module>
         <module>hibernate-create-drop</module>
         <module>miscellaneous</module>
-        <module>hibernate-tree-nodes</module>
         <module>asm-playground</module>
         <module>log4j-reconfigure-on-the-fly</module>
         <module>jersey-with-streaming-xml-response</module>
         <module>clojure-playground</module>
         <module>scala-playground</module>
         <module>scalatest</module>
+        <module>basic-aspectj</module>
         <module>basic-spring-jms</module>
         <module>hibernate-multi-many-to-ones</module>
         <module>serviceloader-example</module>
@@ -30,7 +30,13 @@
         <module>spring-aspectj-build-time-weaving</module>
         <module>hibernate-with-xml-mappings</module>
         <module>groovy-cross-compiled-with-java-with-stubs</module>
+        <module>spring-aspectj-load-time-weaving-in-jetty</module>
+        <module>stackoverflow</module>
+        <module>assembly-plugin-fat-jar</module>
     </modules>
+    <properties>
+        <mainClass>If you see this, then you're trying to run "mvn exec:java" without overriding this "mainClass" POM property or otherwise providing a main class to the exec plugin.</mainClass>
+    </properties>
     <scm>
         <developerConnection>scm:git|ssh://git@github.com/zzantozz/testbed.git</developerConnection>
     </scm>
@@ -43,6 +49,19 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <id>default-cli</id>
+                        <configuration>
+                            <mainClass>${mainClass}</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <repositories>
@@ -53,4 +72,13 @@
             <layout>default</layout>
         </repository>
     </repositories>
+    <dependencies>
+        <dependency>
+            <!-- This is only here because IntelliJ is all-or-nothing when it comes to the aspectj compiler. Either you're compiling with javac or with ajc.
+                Therefore if you're in a module that doesn't have aspectjrt on the classpath, you'll get a compiler error. -->
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.6.11</version>
+        </dependency>
+    </dependencies>
 </project>
