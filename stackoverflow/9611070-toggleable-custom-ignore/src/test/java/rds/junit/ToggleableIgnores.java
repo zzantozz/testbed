@@ -11,13 +11,11 @@ import org.junit.runners.model.Statement;
  * Time: 9:58 PM
  */
 public class ToggleableIgnores implements MethodRule {
-    public static final EmptyStatement EMPTY_STATEMENT = new EmptyStatement();
-
     @Override
     public Statement apply(Statement base, FrameworkMethod method, Object target) {
         boolean invertIgnores = System.getProperty("junit.invertIgnores") != null;
         boolean isIgnored = method.getAnnotation(MyIgnore.class) != null;
-        Statement[] s = { base, EMPTY_STATEMENT};
+        Statement[] s = { base, new SkipMethodStatement(method)};
         return xnor(invertIgnores, isIgnored) ? s[0] : s[1];
     }
 
@@ -25,9 +23,16 @@ public class ToggleableIgnores implements MethodRule {
         return !(x ^ y);
     }
 
-    private static class EmptyStatement extends Statement {
+    private static class SkipMethodStatement extends Statement {
+        private FrameworkMethod method;
+
+        public SkipMethodStatement(FrameworkMethod method) {
+            this.method = method;
+        }
+
         @Override
-        public void evaluate() {
+        public void evaluate() throws Throwable {
+            System.out.println("Skipping method: " + method.getName());
         }
     }
 }
