@@ -37,7 +37,9 @@
         <module>spring-method-caching</module>
     </modules>
     <properties>
+<!--
         <mainClass>If you see this, then you're trying to run "mvn exec:java" without overriding this "mainClass" POM property or otherwise providing a main class to the exec plugin.</mainClass>
+-->
     </properties>
     <scm>
         <developerConnection>scm:git|ssh://git@github.com/zzantozz/testbed.git</developerConnection>
@@ -52,6 +54,7 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
+<!-- Not sure exactly why I did this, but it prevents me from using -D exec.mainClass at the command line.
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -65,6 +68,7 @@
                     </execution>
                 </executions>
             </plugin>
+-->
         </plugins>
     </build>
     <repositories>
