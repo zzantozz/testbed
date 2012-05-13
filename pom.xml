@@ -34,6 +34,7 @@
         <module>stackoverflow</module>
         <module>assembly-plugin-fat-jar</module>
         <module>multiple-transactions-spanning-multiple-contexts</module>
+        <module>spring-method-caching</module>
     </modules>
     <properties>
         <mainClass>If you see this, then you're trying to run "mvn exec:java" without overriding this "mainClass" POM property or otherwise providing a main class to the exec plugin.</mainClass>
