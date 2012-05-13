@@ -16,5 +16,6 @@
         <module>7755255-gmaven-to-build-xml-from-classpath</module>
         <module>7809543-hibernate-spring-jpa</module>
         <module>8367671-convert-xml-stream-to-json-stream</module>
+        <module>10539417-basic-spring-data-jpa</module>
     </modules>
 </project>
