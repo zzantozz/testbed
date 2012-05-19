@@ -35,6 +35,7 @@
         <module>assembly-plugin-fat-jar</module>
         <module>multiple-transactions-spanning-multiple-contexts</module>
         <module>spring-method-caching</module>
+        <module>spring-with-impala-dynamic-properties</module>
     </modules>
     <properties>
 <!--
