@@ -18,5 +18,6 @@
         <module>8367671-convert-xml-stream-to-json-stream</module>
         <module>10539417-basic-spring-data-jpa</module>
         <module>9611070-toggleable-custom-ignore</module>
+        <module>11678699-basic-springmvc</module>
     </modules>
 </project>
