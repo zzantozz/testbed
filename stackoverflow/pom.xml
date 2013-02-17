@@ -19,5 +19,6 @@
         <module>10539417-basic-spring-data-jpa</module>
         <module>9611070-toggleable-custom-ignore</module>
         <module>11678699-basic-springmvc</module>
+        <module>14921963-hibernate-circular-reference</module>
     </modules>
 </project>
