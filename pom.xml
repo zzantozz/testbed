@@ -37,6 +37,7 @@
         <module>spring-test-framework-with-java-config-mockito-beans</module>
         <module>spring-method-caching</module>
         <module>spring-with-impala-dynamic-properties</module>
+        <module>guava-concatenate-streams</module>
     </modules>
     <properties>
 <!--
