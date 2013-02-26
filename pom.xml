@@ -38,6 +38,7 @@
         <module>spring-method-caching</module>
         <module>spring-with-impala-dynamic-properties</module>
         <module>guava-concatenate-streams</module>
+        <module>spring-data</module>
     </modules>
     <properties>
 <!--
