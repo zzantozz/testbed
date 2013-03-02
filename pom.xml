@@ -39,6 +39,7 @@
         <module>spring-with-impala-dynamic-properties</module>
         <module>guava-concatenate-streams</module>
         <module>spring-data</module>
+        <module>spring-mvc</module>
     </modules>
     <properties>
 <!--
