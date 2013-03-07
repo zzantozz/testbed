@@ -20,5 +20,6 @@
         <module>9611070-toggleable-custom-ignore</module>
         <module>11678699-basic-springmvc</module>
         <module>14921963-hibernate-circular-reference</module>
+        <module>15235633-hibernate-deleting-collection-after-load</module>
     </modules>
 </project>
