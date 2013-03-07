@@ -41,6 +41,7 @@
         <module>spring-data</module>
         <module>spring-mvc</module>
         <module>spring</module>
+        <module>groovy2-with-gmaven</module>
     </modules>
     <properties>
 <!--
