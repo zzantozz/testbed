@@ -40,6 +40,7 @@
         <module>guava-concatenate-streams</module>
         <module>spring-data</module>
         <module>spring-mvc</module>
+        <module>spring</module>
     </modules>
     <properties>
 <!--
