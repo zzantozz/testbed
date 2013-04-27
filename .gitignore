@@ -3,3 +3,7 @@
 *.iws
 target
 .idea
+out
+build
+.gradle
+.idea
