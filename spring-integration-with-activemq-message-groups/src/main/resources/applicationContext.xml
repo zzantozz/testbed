@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:int="http://www.springframework.org/schema/integration"
+    xmlns:amq="http://activemq.apache.org/schema/core"
+    xsi:schemaLocation="
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+     http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+     http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core-5.7.0.xsd
+    ">
+
+    <amq:connectionFactory brokerURL="vm://theBroker"/>
+
+    <int:channel id="inbound"/>
+
+    <int:bridge input-channel="inbound" output-channel="outbound"/>
+
+    <int:channel id="outbound">
+        <int:queue/>
+    </int:channel>
+
+</beans>
