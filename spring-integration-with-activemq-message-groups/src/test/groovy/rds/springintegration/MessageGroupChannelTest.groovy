@@ -7,6 +7,7 @@ import org.springframework.context.annotation.ImportResource
 import org.springframework.integration.channel.QueueChannel
 import org.springframework.integration.core.MessagingTemplate
 import org.springframework.integration.message.GenericMessage
+import org.springframework.integration.support.MessageBuilder
 import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
 
@@ -29,13 +30,13 @@ class MessageGroupChannelTest extends Specification {
     @Autowired QueueChannel outbound
     String randomness = UUID.randomUUID()
 
-    def setup(){
+    def setup() {
         outbound.clear()
     }
 
     def 'messages go from inbound to outbound'() {
         given:
-        def msg = new GenericMessage("nothing special $randomness")
+        def msg = new GenericMessage("inbound to outbound test $randomness")
 
         when:
         messaging.send 'inbound', msg
@@ -43,12 +44,12 @@ class MessageGroupChannelTest extends Specification {
         then:
         def msgOut = outbound.receive(2000)
         msgOut
-        msgOut.payload == "nothing special $randomness"
+        msgOut.payload == "inbound to outbound test $randomness"
     }
 
     def 'a single message incurs typical processing delays'() {
         given:
-        def msg = new GenericMessage("nothing special $randomness")
+        def msg = new GenericMessage("delay test $randomness")
 
         when:
         messaging.send 'inbound', msg
@@ -78,6 +79,7 @@ class MessageGroupChannelTest extends Specification {
             sleep 50
             elapsed = System.currentTimeMillis() - start
         }
+        outbound.queueSize == 5
         elapsed > 5 * 1200
         elapsed < 15000
     }
