@@ -12,9 +12,25 @@
 
     <amq:connectionFactory brokerURL="vm://theBroker"/>
 
-    <int:channel id="inbound"/>
+    <bean id="a" class="rds.springintegration.SlowTransformer" p:delay="250" p:name="A"/>
+    <bean id="b" class="rds.springintegration.SlowTransformer" p:delay="250" p:name="B"/>
+    <bean id="c" class="rds.springintegration.SlowTransformer" p:delay="250" p:name="C"/>
+    <bean id="d" class="rds.springintegration.SlowTransformer" p:delay="250" p:name="D"/>
+    <bean id="e" class="rds.springintegration.SlowTransformer" p:delay="250" p:name="E"/>
 
-    <int:bridge input-channel="inbound" output-channel="outbound"/>
+    <!-- The inbound channel is a QueueChannel so we can send message to it asynchronously from the test. -->
+    <int:channel id="inbound">
+        <int:queue/>
+    </int:channel>
+
+    <int:chain input-channel="inbound" output-channel="outbound">
+        <int:poller fixed-rate="10"/>
+        <int:transformer ref="a"/>
+        <int:transformer ref="b"/>
+        <int:transformer ref="c"/>
+        <int:transformer ref="d"/>
+        <int:transformer ref="e"/>
+    </int:chain>
 
     <int:channel id="outbound">
         <int:queue/>
