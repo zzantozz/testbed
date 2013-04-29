@@ -10,7 +10,7 @@
      http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core-5.7.0.xsd
     ">
 
-    <amq:connectionFactory brokerURL="vm://theBroker"/>
+    <amq:connectionFactory id="connectionFactory" brokerURL="vm://theBroker"/>
 
     <bean id="a" class="rds.springintegration.SlowTransformer" p:delay="250" p:name="A"/>
     <bean id="b" class="rds.springintegration.SlowTransformer" p:delay="250" p:name="B"/>
@@ -23,8 +23,21 @@
         <int:queue/>
     </int:channel>
 
-    <int:chain input-channel="inbound" output-channel="outbound">
+    <int:header-enricher input-channel="inbound" output-channel="concurrency">
         <int:poller fixed-rate="10"/>
+        <int:header name="JMSXGroupID" value="default"/>
+    </int:header-enricher>
+
+    <bean id="concurrency" class="org.springframework.integration.jms.config.BetterJmsChannelFactoryBean"
+          p:beanName="inbound"
+          p:concurrency="20"
+          p:maxMessagesPerTask="1"
+          p:connectionFactory-ref="connectionFactory"
+          p:destinationName="InboundMessages"
+          p:headerMapping="true"
+    />
+
+    <int:chain input-channel="concurrency" output-channel="outbound">
         <int:transformer ref="a"/>
         <int:transformer ref="b"/>
         <int:transformer ref="c"/>

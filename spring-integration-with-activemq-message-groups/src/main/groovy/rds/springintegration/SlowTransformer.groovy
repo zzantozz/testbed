@@ -17,7 +17,7 @@ class SlowTransformer {
 
     @Transformer
     Message<?> delay(Message<?> message) {
-        log.info("$message.payload at delay transformer $name")
+        log.info("$message.payload at delay transformer $name, group=$message.headers.JMSXGroupID")
         sleep delay
         MessageBuilder.fromMessage(message).setHeader(name, System.currentTimeMillis()).build()
     }
