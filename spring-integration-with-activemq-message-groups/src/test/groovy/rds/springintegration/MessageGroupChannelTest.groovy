@@ -7,7 +7,6 @@ import org.springframework.context.annotation.ImportResource
 import org.springframework.integration.channel.QueueChannel
 import org.springframework.integration.core.MessagingTemplate
 import org.springframework.integration.message.GenericMessage
-import org.springframework.integration.support.MessageBuilder
 import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
 
@@ -32,6 +31,7 @@ class MessageGroupChannelTest extends Specification {
     @Autowired MessagingTemplate messaging
     @Autowired QueueChannel outbound
     String randomness = UUID.randomUUID()
+    long testStart
 
     def setup() {
         // wait for all messages to process through in case of failures
@@ -43,6 +43,8 @@ class MessageGroupChannelTest extends Specification {
             sleep MAX_ALLOWED_TIME_PER_MESSAGE
         }
         println 'Outbound channel seems clear, starting test'
+        // Timing is everything.
+        testStart = System.currentTimeMillis()
     }
 
     def 'messages go from inbound to outbound'() {
@@ -53,7 +55,7 @@ class MessageGroupChannelTest extends Specification {
         messaging.send 'inbound', msg
 
         then:
-        def msgOut = outbound.receive(2000)
+        def msgOut = outbound.receive(MAX_ALLOWED_TIME_PER_MESSAGE)
         msgOut
         msgOut.payload == "inbound to outbound test $randomness"
     }
@@ -69,6 +71,7 @@ class MessageGroupChannelTest extends Specification {
         !outbound.receive(1000)
         def msgOut = outbound.receive(1000)
         msgOut
+        msgOut.payload == "delay test $randomness"
         msgOut.headers.A
         msgOut.headers.B
         msgOut.headers.C
@@ -78,14 +81,13 @@ class MessageGroupChannelTest extends Specification {
 
     def 'five messages processed serially shows linear increase in delay'() {
         given:
-        def messages = multipleMessages 5, randomness, { 'default' }
+        def messages = multipleMessages 5, randomness, 1
 
         when:
-        long start = System.currentTimeMillis()
         messages.each{ messaging.send 'inbound', it }
 
         then:
-        long elapsed = waitForNMessagesOrTimeToProcessMSerially 5, 5, start
+        long elapsed = waitForNMessagesOrTimeToProcessMSerially 5, 5
         outbound.queueSize == 5
         elapsed >= 5 * TIME_TO_PROCESS_ONE_MESSAGE
         elapsed <= 5 * MAX_ALLOWED_TIME_PER_MESSAGE
@@ -93,14 +95,13 @@ class MessageGroupChannelTest extends Specification {
 
     def 'sending five messages with different groups has the same delay as a single message'() {
         given:
-        def messages = multipleMessages 5, randomness, { "group-$it" }
+        def messages = multipleMessages 5, randomness, 5
 
         when:
-        long start = System.currentTimeMillis()
         messages.each{ messaging.send 'inbound', it }
 
         then:
-        long elapsed = waitForNMessagesOrTimeToProcessMSerially 5, 1, start
+        long elapsed = waitForNMessagesOrTimeToProcessMSerially 5, 1
         outbound.queueSize == 5
         elapsed >= TIME_TO_PROCESS_ONE_MESSAGE
         elapsed <= MAX_ALLOWED_TIME_PER_MESSAGE
@@ -108,14 +109,13 @@ class MessageGroupChannelTest extends Specification {
 
     def 'sending 60 messages in 20 different groups has the same delay as 3 messages (because concurrency is capped at 20)'() {
         given:
-        def messages = multipleMessages 60, randomness, { 'group-' + (it % 20) }
+        def messages = multipleMessages 60, randomness, 20
 
         when:
-        long start = System.currentTimeMillis()
         messages.each{ messaging.send 'inbound', it }
 
         then:
-        long elapsed = waitForNMessagesOrTimeToProcessMSerially 60, 3, start
+        long elapsed = waitForNMessagesOrTimeToProcessMSerially 60, 3
         outbound.queueSize == 60
         elapsed >= 3 * TIME_TO_PROCESS_ONE_MESSAGE
         elapsed <= 3 * MAX_ALLOWED_TIME_PER_MESSAGE
@@ -123,50 +123,48 @@ class MessageGroupChannelTest extends Specification {
 
     def 'sending 50 messages in 25 different groups has the same delay as 3 messages (because concurrency is capped at 20)'() {
         given:
-        def messages = multipleMessages 50, randomness, { 'group-' + (it % 25) }
+        def messages = multipleMessages 50, randomness, 25
 
         when:
-        long start = System.currentTimeMillis()
         messages.each{ messaging.send 'inbound', it }
 
         then:
-        long elapsed = waitForNMessagesOrTimeToProcessMSerially 50, 3, start
+        long elapsed = waitForNMessagesOrTimeToProcessMSerially 50, 3
         outbound.queueSize == 50
         elapsed >= 3 * TIME_TO_PROCESS_ONE_MESSAGE
         elapsed <= 3 * MAX_ALLOWED_TIME_PER_MESSAGE
     }
 
     /**
-     * Creates multiple messages for tests given the number of messages to create, a base payload to use, and a closure
-     * that will calculate which message group to put the message in. The group closure will receive one argument
-     * when called, which is the sequence number of the message, counting from 1. The same number will be included in
-     * the message payload. As an example, this:
+     * Creates multiple messages for tests given the number of messages to create, a base payload to use, and the number
+     * of groups to divide the messages into. The payload will be prepended with the sequence number of the generated
+     * message, starting from 1. Groups are also numbered starting from 1. As an example, this:
      *
-     *   multipleMessages(3, 'foo', { "group-$it" })
+     *   multipleMessages(4, 'foo', 2)
      *
      * would create the following messages:
      *
      *   payload | message group
      *   '1 foo' | 'group-1'
      *   '2 foo' | 'group-2'
-     *   '3 foo' | 'group-3'
+     *   '3 foo' | 'group-1'
+     *   '4 foo' | 'group-2'
      *
      */
-    def multipleMessages(int number, String payload, Closure groupClosure) {
-        def messages = (1..number).collect{ new GenericMessage("$it $payload") }
-        int count = 1
-        messages.collect{ MessageBuilder.fromMessage(it).setHeader('JMSXGroupID', groupClosure(count++)).build() }
+    def multipleMessages(int messageCount, String payload, int groupCount) {
+        int count = 0
+        (1..messageCount).collect{
+            def groupNumber = (count++ % groupCount) + 1
+            // Don't use a GString for the group id!
+            new GenericMessage("$count $payload", [JMSXGroupID: 'group-' + groupNumber])
+        }
     }
 
-    long waitForNMessagesOrTimeToProcessMSerially(int messages, int serially, long startTime) {
-        waitToProcessNMessagesSeriallyOrMActualMessages(startTime, serially, messages)
-    }
-
-    long waitToProcessNMessagesSeriallyOrMActualMessages(long startTime, int serial, int actual) {
-        long elapsed = System.currentTimeMillis() - startTime
-        while (outbound.queueSize < actual && elapsed < serial * MAX_ALLOWED_TIME_PER_MESSAGE) {
+    long waitForNMessagesOrTimeToProcessMSerially(int messages, int serially) {
+        long elapsed = System.currentTimeMillis() - testStart
+        while (outbound.queueSize < messages && elapsed < serially * MAX_ALLOWED_TIME_PER_MESSAGE) {
             sleep 50
-            elapsed = System.currentTimeMillis() - startTime
+            elapsed = System.currentTimeMillis() - testStart
         }
         println "Exited waiting with queue size=$outbound.queueSize and elapsed=$elapsed"
         elapsed
