@@ -3,10 +3,12 @@
     xmlns:p="http://www.springframework.org/schema/p"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:int="http://www.springframework.org/schema/integration"
+    xmlns:int-jms="http://www.springframework.org/schema/integration/jms"
     xmlns:amq="http://activemq.apache.org/schema/core"
     xsi:schemaLocation="
      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
      http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+     http://www.springframework.org/schema/integration/jms http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd
      http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core-5.7.0.xsd
     ">
 
@@ -18,26 +20,11 @@
     <bean id="d" class="rds.springintegration.SlowTransformer" p:delay="250" p:name="D"/>
     <bean id="e" class="rds.springintegration.SlowTransformer" p:delay="250" p:name="E"/>
 
-    <!-- The inbound channel is a QueueChannel so we can send message to it asynchronously from the test. -->
-    <int:channel id="inbound">
-        <int:queue/>
-    </int:channel>
+    <bean id="groupingMessageConverter" class="rds.springintegration.GroupingMessageConverter"/>
 
-    <int:header-enricher input-channel="inbound" output-channel="concurrency">
-        <int:poller fixed-rate="10"/>
-        <int:header name="JMSXGroupID" value="default"/>
-    </int:header-enricher>
+    <int-jms:channel id="inbound" queue-name="InboundQueue" message-converter="groupingMessageConverter" concurrency="20"/>
 
-    <bean id="concurrency" class="org.springframework.integration.jms.config.BetterJmsChannelFactoryBean"
-          p:beanName="inbound"
-          p:concurrency="20"
-          p:maxMessagesPerTask="1"
-          p:connectionFactory-ref="connectionFactory"
-          p:destinationName="InboundMessages"
-          p:headerMapping="true"
-    />
-
-    <int:chain input-channel="concurrency" output-channel="outbound">
+    <int:chain input-channel="inbound" output-channel="outbound">
         <int:transformer ref="a"/>
         <int:transformer ref="b"/>
         <int:transformer ref="c"/>
