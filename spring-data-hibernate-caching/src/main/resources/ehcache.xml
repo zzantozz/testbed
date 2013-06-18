@@ -1,0 +1,5 @@
+<ehcache>
+    <cache name="org.hibernate.cache.StandardQueryCache"/>
+    <cache name="org.hibernate.cache.UpdateTimestampsCache"/>
+    <cache name="rds.testbed.Thing"/>
+</ehcache>
